@@ -1,0 +1,12 @@
+data glm ;
+input snoring disease total;
+cards;
+0 24 1379 
+2 35 638 
+4 21 213 
+5 30 254
+;
+run ;
+proc genmod data=glm;
+model disease/total=snoring/dist=bin link=logit;
+run;
