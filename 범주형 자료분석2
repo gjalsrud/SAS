@@ -12,4 +12,8 @@ proc genmod data=glm;
 model disease/total=snoring/dist=bin link=logit;
 run;
 
-
+proc genmod data=glm;
+class snoring;
+model disease/total=snoring/dist=bin link=logit;
+output out=a1 pred=pred;
+run;
