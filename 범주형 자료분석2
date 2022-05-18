@@ -45,4 +45,12 @@ class spine(ref='1')/param=ref;
 model y(event='1')=spine/covb;
 run;
 
+proc genmod data=crab;
+model y/n=width/dist=binomial link=logit;
+run;
+
+/*모형적합도*/ 
+proc logistic data=crab;
+model y(event='1')=width/lackfit;
+run;
 
