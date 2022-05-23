@@ -54,3 +54,8 @@ proc logistic data=crab;
 model y(event='1')=width/lackfit;
 run;
 
+proc logistic data=crab2 ;
+class color spine/param=ref ref=first;
+model y(event='1')=color spine width;
+run;
+
