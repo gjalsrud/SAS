@@ -34,6 +34,11 @@ if satell=0 then y=0;
 else if satell>0 then y=1;
 else y=9999;
 run;
+
+proc freq data=crab2;
+table y;
+run; 
+
 /*4번과 1번의 차이*/ 
 proc logistic data=crab2;
 class color (ref='4')/param=ref;;
