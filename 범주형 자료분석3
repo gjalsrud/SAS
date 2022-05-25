@@ -9,14 +9,15 @@ data obesity_logit;
 set obesity;
 loss=BEFORE_W-AFTER_W;
 if loss^=. and BEFORE_W-AFTER_W<5 then event=0;
-else if BEFORE_W-AFTER_W>5 then event=1;
+else if BEFORE_W-AFTER_W=>5 then event=1;
 else event=9999;
 run;
 proc freq data=obesity_logit;
 table event;
 run;
 
-단순로지스틱회귀 
+
+(단순로지스틱회귀) 
 5kg 이상 감소 가능성 
 1번 치료법의 5kg 이상 감소할 확률 및 신뢰구간 
 모형적합도 
@@ -26,7 +27,27 @@ model event(event="1")=method/covb lackfit;
 output out=result pred=p lower=low upper=upp;
 run;
 
-교호작용을 고려한 method 비교 
-methood와 성별간에 관계 method와 age간에 관계
+다중회귀분석 
+proc logistic data=obesity_logit;
+class method(ref="0") sex/param=ref ref=first;
+model event(event="1")=method sex age/covb lackfit;
+output out=result pred=p lpwer=low upper=upp;
+run;
+세 변수 사이에 관계 없음 교란작용이 일어남
+신뢰구간 사이에 오류 발생  
 
-AIC를 기준으로 최적의 모형을 선정 - AIC가 작은 것이 좋은 모형 
+시험문제 X
+교호작용을 고려한 method 비교 - methood와 성별간에 관계 method와 age간에 관계
+proc logistic data=obesity_logit;
+class method(ref="0")sex/oaram=ref ref=first;
+model event(event="1")=method sex age method*sex method*age sex*age;
+run;
+
+
+AIC를 기준으로 최적의 모형을 선정 - AIC가 작은 것이 좋은 모형
+하나씩 제거 intercept only 
+proc logistic data=obesity_logit;
+class method(ref="0") sex/param=ref ref=first;
+model event(event="1")=method sex age;
+run;
+
