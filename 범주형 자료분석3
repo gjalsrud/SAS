@@ -1,0 +1,32 @@
+obesity 자료 불러오기 
+proc import out=obesity
+datafile="C:\Users\OWNER\Desktop\obesity.csv"
+dbms=csv replace;
+run;
+
+5kg이상 감소=1 5kg 미만 감소=0
+data obesity_logit;
+set obesity;
+loss=BEFORE_W-AFTER_W;
+if loss^=. and BEFORE_W-AFTER_W<5 then event=0;
+else if BEFORE_W-AFTER_W>5 then event=1;
+else event=9999;
+run;
+proc freq data=obesity_logit;
+table event;
+run;
+
+단순로지스틱회귀 
+5kg 이상 감소 가능성 
+1번 치료법의 5kg 이상 감소할 확률 및 신뢰구간 
+모형적합도 
+proc logistic data=obesity_logit;
+class method(ref="0")/param=ref ref=first;
+model event(event="1")=method/covb lackfit;
+output out=result pred=p lower=low upper=upp;
+run;
+
+교호작용을 고려한 method 비교 
+methood와 성별간에 관계 method와 age간에 관계
+
+AIC를 기준으로 최적의 모형을 선정 - AIC가 작은 것이 좋은 모형 
