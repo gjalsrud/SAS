@@ -51,3 +51,10 @@ class method(ref="0") sex/param=ref ref=first;
 model event(event="1")=method sex age;
 run;
 
+proc genmod data=crab;
+class color spine/param=ref ref=first;
+model satell=weight/dist=poi link=log covb;
+output out=result pred=p lower=low upper=up;
+run;
+
+width가 21.5가 나올때는 -0.484+0.5893*21.5
