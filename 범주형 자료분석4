@@ -1,0 +1,29 @@
+1. 위성의 수와 width
+proc genmod data=crab;
+class colort spine/param=ref ref=first;
+model satell=weight/dist=poi link=log covb;
+output out=result pred=p lower=low upper=up;
+run;
+1.4일때 평균 위성의 수 
+2.5일때 평균 위성의 수 
+2.5일때 평균 위성의 수/1.4일때 평균 위성의 수 (비례 구하기)
+
+2. 위성의 수와 color
+proc genmod data=crab;
+class colort(ref="1")spine/param=ref ref=first;
+model satell=color/dist=poi link=log covb;
+output out=result pred=p lower=low upper=up;
+run;
+
+2일때 위성의 수 
+1일때 위성의 수 
+2일때 위성의 수/1일때 위성의 수 (비례 구하기)
+
+3. 위성의 수와 spine(참조범주 1)proc genmod data=crab;
+class colort spine/param=ref ref=first;
+model satell=weight/dist=poi link=log covb;
+output out=result pred=p lower=low upper=up;
+run;
+3일때 평균 위성의 수 
+1일때 평균 위성의 수 
+3일때 평균 위성의 수/1일때 평균 위성의 수 (비례 구하기)
