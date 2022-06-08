@@ -9,3 +9,15 @@ run;
 
 # 해석 : 성별과 연령 사이 두 치료법 사이에 p value값 0.2832 차이가 없다
  
+# 음이항 회귀모형  
+proc genmod data=obesity;
+class method sex/param=ref ref=first;
+model complication=method age sex / dist=negbin ;
+run;
+
+
+성별과 연령을 보정한 삶의 질에 대한 치료효과 비교
+proc genmod data=obesity;
+class method sex/param=ref ref=first;
+model after_qol=method before_qol age sex / dist=gamma link=log;
+run;
