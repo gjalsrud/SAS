@@ -1,0 +1,11 @@
+proc import out=obesity
+datafile="C:\Users\OWNER\Desktop\obesity.csv"
+dbms=csv replace;
+run;
+proc genmod data=obesity;
+class method sex/ref=first;
+model complication = method age sex/dist=poisson pscale;
+run;
+
+# 해석 : 성별과 연령 사이 두 치료법 사이에 p value값 0.2832 차이가 없다
+ 
