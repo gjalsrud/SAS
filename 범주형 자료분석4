@@ -19,7 +19,8 @@ run;
 1일때 위성의 수 
 2일때 위성의 수/1일때 위성의 수 (비례 구하기)
 
-3. 위성의 수와 spine(참조범주 1)proc genmod data=crab;
+3. 위성의 수와 spine(참조범주 1)
+proc genmod data=crab;
 class colort spine/param=ref ref=first;
 model satell=weight/dist=poi link=log covb;
 output out=result pred=p lower=low upper=up;
